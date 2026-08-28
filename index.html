@@ -230,10 +230,10 @@
       الشبكة. تبيع بالباركود، المخزون بينقص لوحده، وتعرف آخر النهار بعت بكام وكسبت كام بجد.
     </p>
     <div class="cta">
-      <a class="btn btn-clay" data-dl href="https://github.com/Ahmed-Ibrahim98/general-store-app/releases/download/v0.1.3/Kashkoul_0.1.3_x64-setup.exe">⬇ حمّل النسخة الحالية</a>
+      <a class="btn btn-clay" data-dl href="https://github.com/Ahmed-Ibrahim98/general-store-app/releases/latest/download/Kashkoul-x64-setup.exe">⬇ حمّل النسخة الحالية</a>
       <a class="btn btn-ghost" href="#contact">اطلب تركيب في محلك</a>
     </div>
-    <p class="verline">الإصدار الحالي <b data-ver>0.1.3</b> · ويندوز 10 أو أحدث · التحديثات بتنزل لوحدها</p>
+    <p class="verline">الإصدار الحالي <b data-ver>0.1.4</b> · ويندوز 10 أو أحدث · التحديثات بتنزل لوحدها</p>
     <p class="note">تركيب وإدخال الأصناف بنعملهم معاك — مش هتقعد تكتب أصناف محلك بنفسك.</p>
 
     <div class="pillars">
@@ -298,14 +298,14 @@
           مش محتاج تنزّل نسخة جديدة كل مرة.
         </p>
         <div class="meta">
-          <span class="chip v">الإصدار <span data-ver>0.1.3</span></span>
+          <span class="chip v">الإصدار <span data-ver>0.1.4</span></span>
           <span class="chip">ويندوز 10 أو أحدث</span>
           <span class="chip">64-bit</span>
           <span class="chip">تحديث تلقائي</span>
         </div>
       </div>
       <div class="dl-actions">
-        <a class="btn btn-clay" data-dl href="https://github.com/Ahmed-Ibrahim98/general-store-app/releases/download/v0.1.3/Kashkoul_0.1.3_x64-setup.exe">
+        <a class="btn btn-clay" data-dl href="https://github.com/Ahmed-Ibrahim98/general-store-app/releases/latest/download/Kashkoul-x64-setup.exe">
           ⬇ تحميل لويندوز
         </a>
       </div>
@@ -396,24 +396,16 @@
 </footer>
 
 <script>
-/* Point the download buttons at the newest Windows installer, whatever it is called.
-   The hardcoded href above already works; this only upgrades it after a release,
-   so the page never goes stale and never needs editing on a version bump.
-   Fails silently — if GitHub is unreachable or rate-limits, the hardcoded link stands. */
+/* The download buttons point at /releases/latest/download/Kashkoul-x64-setup.exe, a
+   version-less asset the release workflow publishes on every build. GitHub redirects
+   it to the newest release, so the link never goes stale and never needs editing.
+   This only fills in the version number shown on the page, and fails silently. */
 (function () {
   var REPO = 'Ahmed-Ibrahim98/general-store-app';
   fetch('https://api.github.com/repos/' + REPO + '/releases/latest')
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (rel) {
-      if (!rel || !rel.assets) return;
-      var exe =
-        rel.assets.filter(function (a) { return /x64[-_]setup\.exe$/i.test(a.name); })[0] ||
-        rel.assets.filter(function (a) { return /\.exe$/i.test(a.name); })[0];
-      if (exe) {
-        Array.prototype.forEach.call(document.querySelectorAll('[data-dl]'), function (a) {
-          a.setAttribute('href', exe.browser_download_url);
-        });
-      }
+      if (!rel) return;
       var ver = (rel.tag_name || '').replace(/^v/, '');
       if (ver) {
         Array.prototype.forEach.call(document.querySelectorAll('[data-ver]'), function (el) {
